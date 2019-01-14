@@ -9,7 +9,7 @@
       </label>
       <button type="submit">Submit</button>
     </form>
-    <h2>Your time slot is: {{ timeslot }}</h2>
+    <!-- <h2>Your time slot is: {{ timeslot }}</h2> -->
   </div>
 </template>
 

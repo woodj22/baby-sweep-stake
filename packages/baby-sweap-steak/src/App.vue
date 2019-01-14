@@ -6,35 +6,22 @@
     </header>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <GetTimeSlotForm/>
+
+    <TimeSlots/>
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 import GetTimeSlotForm from "./components/GetTimeSlotForm.vue";
-import VueResource from "vue-resource";
+import TimeSlots from "./components/TimeSlots.vue";
 
 export default {
   name: "app",
   components: {
     HelloWorld,
-    GetTimeSlotForm
-  },
-  data: function () {
-    return {
-      sources: ''
-    }
-  },
-  methods: {
-    getUnits: function() {}
-  },
-  created: function() {
-    console.log(process.env.VUE_APP_BASE_API);
-    // console.log("This is potential passed data: " + data);
-    this.$http.get(process.env.VUE_APP_BASE_API).then(response => {
-      this.sources = response.data.sources;
-      console.log(response.data)
-    });
+    GetTimeSlotForm,
+    TimeSlots
   }
 };
 </script>
