@@ -14,12 +14,12 @@
 </template>
 
 <script>
+import { EventBus } from "../event-bus.js";
 
 export default {
   name: "GetTimeSlotForm",
   data: function() {
     return {
-      message: "sdfg",
       timeslot: "",
       user: {
         name: ""
@@ -28,20 +28,22 @@ export default {
   },
   methods: {
     handleSubmit(data) {
-      console.log(process.env.VUE_APP_BASE_API);
-      console.log("This is potential passed data: " + data)
-      this.$http.post(process.env.VUE_APP_BASE_API).then(
-        response => {
-          // get body data
-          this.someData = response.body;
-          console.log(this.sameData)
-        },
-        response => {
-          // error callback
-        }
-      );
+      this.$http
+        .post(process.env.VUE_APP_BASE_API, data, [])
+        .then(
+          response => {
+            return response.text();
+          },
+          response => {
+            // error callback
+          }
+        )
+        .then(response => {
+          this.timeslot = JSON.parse(response).data;
+          EventBus.$emit("update-time-slot",this.timeslot);
 
-      console.log("this has submitted now.");
+          this.$emit("update-time-slot", this.timeslot);
+        });
     }
   }
 };
