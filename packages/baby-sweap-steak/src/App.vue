@@ -5,7 +5,8 @@
       <h1>baby sweep steak</h1>
     </header>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <GetTimeSlotForm/>
+    <GetTimeSlotForm @update-time-slot="updateTimeSlot"/>
+    <p> your timeslot is:  {{ timeSlot }} </p> 
 
     <TimeSlots :timeSlots="timeSlots"/>
   </div>
@@ -19,7 +20,8 @@ export default {
   name: "app",
   data() {
     return {
-      timeSlots: []
+      timeSlots: [],
+      timeSlot:''
     };
   },
   created: function() {
@@ -28,27 +30,8 @@ export default {
     });
   },
   methods: {
-    updateTimeSlot(e) {
-      // console.log("This is  a data" + this.timeSlots)
-    // this.timeSlots.push(e/)
-    for(var i in this.timeSlots) {
-        console.log(i)
-         if (this.timeSlots[i].time_slot === e.time_slot) {
-          this.timeSlots[i] = e;
-        }
-
-    }
-
-      // this.timeSlots.forEach((item, i) => {
-      //   console.log(item)
-      //   // console.log('this is i: '+  this.time_slot[i])
-      //   item.time_slot[i] = e
-
-      //   if (item.time_slot === e.time_slot) {
-      //     this.timeSlots[i] = e;
-      //   }
-      // });
-      // this.timeSlots.push(e);
+    updateTimeSlot: function (e) {
+      this.timeSlot = e.time_slot
     }
   },
   components: {

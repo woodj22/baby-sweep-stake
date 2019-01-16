@@ -41,7 +41,6 @@ export default {
         .then(response => {
           this.timeslot = JSON.parse(response).data;
           EventBus.$emit("update-time-slot",this.timeslot);
-
           this.$emit("update-time-slot", this.timeslot);
         });
     }

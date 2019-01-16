@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="container">
-      <div class="timeslots-col" v-for="column in columns">
+      <div class="timeslots-col" v-for="column in values">
         <div
           class="timeslot-container"
           v-for="(item, index) in column"
@@ -25,7 +25,8 @@ export default {
   },
   data: function() {
     return {
-      cols: 2
+      cols: 2,
+      columns: []
     };
   },
   methods: {
@@ -35,51 +36,37 @@ export default {
         "slot-known": property.account_name !== "AVAILABLE"
       };
     },
-    updateTimeSlot(e) {
-      // console.log("This is  a data" + this.timeSlots)
-      // this.timeSlots.push(e/)
-      for (var i in this.timeSlots) {
-        // console.log(i);
-        // this.$props.timeSdlots[i] = "sdf";
-
-        if (this.$props.timeSlots[i].time_slot === e.time_slot) {
-          // console.log('helo hi hi')
-          this.$props.timeSlots[i] = e;
-        }
-        console.log(this.$props.timeSlots);
-        this.$forceUpdate();
-
-        // this.computed.columns()
-      }
-
-      // this.timeSlots.forEach((item, i) => {
-      //   console.log(item)
-      //   // console.log('this is i: '+  this.time_slot[i])
-      //   item.time_slot[i] = e
-
-      //   if (item.time_slot === e.time_slot) {
-      //     this.timeSlots[i] = e;
-      //   }
-      // });
-      // this.timeSlots.push(e);
-    }
-  },
-  created: function() {
-    EventBus.$on("update-time-slot", data => {
-      // this.$props.timeSlots = 'hello world'
-      this.updateTimeSlot(data);
-      console.log("this is new timeslot" + data.time_slot);
-    });
-  },
-  computed: {
-    columns() {
+    setColumns: function() {
       let columns = [];
       let mid = Math.ceil(this.$props.timeSlots.length / this.cols);
       for (let col = 0; col < this.cols; col++) {
         columns.push(this.$props.timeSlots.slice(col * mid, col * mid + mid));
       }
-      // console.log(columns)
+      this.columns = columns
       return columns;
+    },
+    updateTimeSlot(e) {
+      for (var i in this.timeSlots) {
+        if (this.$props.timeSlots[i].time_slot === e.time_slot) {
+          this.$props.timeSlots[i] = e;
+        }
+        this.$forceUpdate();
+      }
+    }
+  },
+  created: function() {
+    this.setColumns();
+
+    EventBus.$on("update-time-slot", data => {
+      this.updateTimeSlot(data);
+      this.setColumns();
+    });
+  },
+  computed: {
+    values() {
+      //This variable is called to make it work. No idea why. 
+      this.columns;
+      return this.setColumns();
     }
   }
 };
