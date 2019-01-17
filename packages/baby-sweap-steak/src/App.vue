@@ -26,7 +26,12 @@ export default {
   },
   created: function() {
     this.$http.get(process.env.VUE_APP_BASE_API).then(response => {
+      console.log('I have run GET command')
+      console.log(process.env.VUE_APP_BASE_API)
+      console.log(response)
       this.timeSlots = response.data.data;
+    }).catch(function (err) {
+      console.log(err)
     });
   },
   methods: {
