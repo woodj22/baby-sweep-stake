@@ -29,17 +29,37 @@ module.exports.get = (event, context, callback) => {
     }
   });
 };
+
+validateAccountName = function (account_name, timeSlots) {
+  for(slot in timeSlots){
+    if (slot.account_name === account_name) {
+      callback(null, {statusCode: 400});
+    }
+  };
+}
+get
 module.exports.post = (event, context, callback) => {
-  console.log(event)
   const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
   var params = {
     Bucket: "baby-sweap-steak",
     Key: "time_slots.json"
   };
-  var responseBody = '';
+
+  account_name = JSON.parse(event['body']).account_name
+
   s3.getObject(params, function (err, data) {
     //   console.log(data.Body.toString())
-    const responseBody = JSON.parse(data.Body.toString());
+    const timeSlots = JSON.parse(data.Body.toString());
+
+    this.validateAccountName(account_name, timeSlots)
+   
+    availableTimeslots = timeSlots.filter(function (slot) {
+        if (slot_time === 'AVAILABLE') {
+          return true
+        }
+    })
+    
 
     if (err) {
       console.log(err, err.stack);
