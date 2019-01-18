@@ -58,18 +58,14 @@ module.exports = {
         });
       
         var params = {
+            Body: JSON.stringify(timeSlots),
             Bucket: "baby-sweap-steak",
             Key: "time_slots.json"
           };
          s3.putObject(params, function(err, data) {
            if (err) console.log(err, err.stack); // an error occurred
            else     console.log(data);           // successful response
-           /*
-           data = {
-            ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-            VersionId: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ"
-           }
-           */
+    
          });
     
        
