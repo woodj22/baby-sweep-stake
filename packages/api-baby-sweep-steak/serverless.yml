@@ -34,23 +34,22 @@ provider:
     - Effect: "Allow"
       Action:
         - "s3:PutObject"
-      Resource:
-        Fn::Join:
-          - ""
-          - - "arn:aws:s3:::baby-sweap-steak/time_slots.json"
+      Resource: "arn:aws:s3:::baby-sweap-steak/time_slots.json"
 
 functions:
   get-times:
-    handler: handler.get
+    handler: index.handle
     events:
       - http:
           path: timeslots
           method: get
+          cors: true
           private: true
   post-time:
-    handler: handler.post
+    handler: create.handle
     events:
       - http:
           path: timeslots
           method: post
+          cors: true
           private: true        
