@@ -28,7 +28,7 @@ module.exports = {
   handle: (event, context, callback) => {
     const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
     var params = {
-      Bucket: "baby-sweap-steak",
+      Bucket: "baby-sweep-stake",
       Key: "time_slots.json"
     };
   
@@ -59,7 +59,7 @@ module.exports = {
       
         var params = {
             Body: JSON.stringify(timeSlots),
-            Bucket: "baby-sweap-steak",
+            Bucket: "baby-sweep-stake",
             Key: "time_slots.json"
           };
          s3.putObject(params, function(err, data) {

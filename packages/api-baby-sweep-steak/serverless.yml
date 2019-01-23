@@ -30,11 +30,11 @@ provider:
     - Effect: "Allow"
       Action:
         - "s3:getObject"
-      Resource: "arn:aws:s3:::baby-sweap-steak/time_slots.json"
+      Resource: "arn:aws:s3:::baby-sweep-stake/time_slots.json"
     - Effect: "Allow"
       Action:
         - "s3:PutObject"
-      Resource: "arn:aws:s3:::baby-sweap-steak/time_slots.json"
+      Resource: "arn:aws:s3:::baby-sweep-stake/time_slots.json"
 
 functions:
   get-times:
