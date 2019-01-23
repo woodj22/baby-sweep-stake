@@ -25,5 +25,12 @@ npm run test
 npm run lint
 ```
 
+### Deploy to S3 bucket
+Deploy to AWS S3 bucket set up in the vue.config.js file
+```
+yarn deploy
+```
+
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
