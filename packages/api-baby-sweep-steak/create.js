@@ -4,11 +4,14 @@ AWS.config.update({ region: 'eu-west-1' });
 
 module.exports = {
   validateAccountName: (accountName, timeSlots) => {
-    for(var slot in timeSlots){
-      if (slot.account_name === accountName) {
+    for(var i in timeSlots){
+      // console.log('This is slot' + timeSlots[i].account_name)
+      if (timeSlots[i].account_name === accountName) {
+        console.log("this is account Name"  + timeSlots[i].account_name)
        return false;
       }
     }
+    return true;
   }, 
   findNewTimeSlot: (timeSlots, accountName) => {
     const availableTimeslots = timeSlots.filter(function (slot) {
@@ -32,22 +35,19 @@ module.exports = {
     var accountName = JSON.parse(event['body']).account_name;
   
     s3.getObject(params, function (err, data) {
-      let timeSlots = JSON.parse(data.Body.toString());
-      if (module.exports.validateAccountName(accountName, timeSlots) === false) {
-        callback(null,  {
-          headers: {
-            "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-            "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS 
-          },
-          statusCode: 200,
-          body: "user has already been taken.",
-        });
-      }
-      return timeSlots;
-
+     
     }).promise().then(function (data) {
-      // console.log(timeSlots.Body.toString())
         let timeSlots = JSON.parse(data.Body.toString());
+        if (module.exports.validateAccountName(accountName, timeSlots) === false) {
+        
+          console.log("Validation has failed");
+          throw EvalError('Validation Failed. Name has Already been taken')
+        }
+        return timeSlots;
+  
+    }).then(function (data) {
+      // console.log(data.Body)
+        let timeSlots = data
 
         const newTimeSlot = module.exports.findNewTimeSlot(timeSlots, accountName);
       
@@ -79,6 +79,21 @@ module.exports = {
           };
           callback(null, response);
     
-    });
+    }).catch(function (err) {
+      console.log(err)
+      if(err instanceof Error) {
+            console.log('hello world')
+          callback(null,  {
+             headers: {
+               "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+               "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS 
+             },
+             statusCode: 400,
+             body: "user has already been taken.",
+           });
+      }
+      console.log(err)
+      return 
+       })
   }
 }
