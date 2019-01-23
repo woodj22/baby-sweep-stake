@@ -6,7 +6,8 @@
     </header>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <GetTimeSlotForm @update-time-slot="updateTimeSlot"/>
-    <p> your timeslot is:  {{ timeSlot }} </p> 
+    <p>your timeslot is: {{ timeSlot }}</p>
+              <h1 v-if="hasFailed">You already have a time slot!</h1>
 
     <TimeSlots :timeSlots="timeSlots"/>
   </div>
@@ -21,22 +22,27 @@ export default {
   data() {
     return {
       timeSlots: [],
-      timeSlot:''
+      timeSlot: "",
+      hasFailed: false
     };
   },
   created: function() {
-    this.$http.get(process.env.VUE_APP_BASE_API).then(response => {
-      console.log('I have run GET command')
-      console.log(process.env.VUE_APP_BASE_API)
-      console.log(response)
-      this.timeSlots = response.data.data;
-    }).catch(function (err) {
-      console.log(err)
-    });
+    this.$http
+      .get(process.env.VUE_APP_BASE_API, {'headers': {'x-api-key': process.env.VUE_APP_API_KEY}})
+      .then(response => {
+        this.timeSlots = response.data.data;
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   },
   methods: {
-    updateTimeSlot: function (e) {
-      this.timeSlot = e.time_slot
+    updateTimeSlot: function(e) {
+      if (e === undefined || e.length == 0) {
+        this.hasFailed = true;
+        return 
+      }
+      this.timeSlot = e.time_slot;
     }
   },
   components: {

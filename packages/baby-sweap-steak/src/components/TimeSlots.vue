@@ -26,7 +26,8 @@ export default {
   data: function() {
     return {
       cols: 2,
-      columns: []
+      columns: [],
+      hasFailed: false,
     };
   },
   methods: {
@@ -42,7 +43,7 @@ export default {
       for (let col = 0; col < this.cols; col++) {
         columns.push(this.$props.timeSlots.slice(col * mid, col * mid + mid));
       }
-      this.columns = columns
+      this.columns = columns;
       return columns;
     },
     updateTimeSlot(e) {
@@ -64,7 +65,7 @@ export default {
   },
   computed: {
     values() {
-      //This variable is called to make it work. No idea why. 
+      //This variable is called to make it work. No idea why.
       this.columns;
       return this.setColumns();
     }

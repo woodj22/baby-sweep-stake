@@ -28,20 +28,31 @@ export default {
   },
   methods: {
     handleSubmit(data) {
+      console.log(this.user.name);
+      const postBody = {
+        account_name: this.user.name
+      };
       this.$http
-        .post(process.env.VUE_APP_BASE_API, data, [])
+        .post(process.env.VUE_APP_BASE_API, postBody, {
+          headers: { "x-api-key": process.env.VUE_APP_API_KEY }
+        })
         .then(
           response => {
             return response.text();
           },
           response => {
-            // error callback
           }
         )
         .then(response => {
           this.timeslot = JSON.parse(response).data;
+          
           EventBus.$emit("update-time-slot",this.timeslot);
+          
           this.$emit("update-time-slot", this.timeslot);
+          
+        }).catch(function(err) {
+            
+            this.$emit("update-time-slot", []);
         });
     }
   }
@@ -50,5 +61,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
