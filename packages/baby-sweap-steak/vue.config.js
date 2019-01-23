@@ -4,7 +4,7 @@ module.exports = {
       registry: undefined,
       awsProfile: 'sandbox',
       region: 'eu-west-1',
-      bucket: 'baby-sweap-steak',
+      bucket: 'baby-sweep-stake',
       createBucket: false,
       staticHosting: true,
       staticIndexPage: 'index.html',

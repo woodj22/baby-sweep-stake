@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <header id="header">
-      <h1>baby sweep steak</h1>
+      <h1>baby sweep stake</h1>
     </header>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <GetTimeSlotForm @update-time-slot="updateTimeSlot"/>
