@@ -1,0 +1,13 @@
+{
+  "name": "api-baby-sweep-steak",
+  "version": "1.0.0",
+  "description": "Collection of lambda functions for sweep stake operation",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.392.0"
+  }
+}
